@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeShaala - Online Compiler</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+    <!--  Logo & Title Section -->
+    <header class="logo-container">
+        <img src="logo1.png" alt="CodeShaala Logo" class="logo" />
+        <h1 class="title">CodeShaala</h1>
+    </header>
+
+    <!--  Main Layout -->
+    <main class="container">
+        <!-- 🔹 Code Editor Section -->
+        <section class="editor-container">
+            <label for="language">Choose Language:</label>
+            <select id="language">
+                <option value="cpp">C++</option>
+                <option value="python">Python</option>
+                <option value="java">Java</option>
+                <option value="javascript">JavaScript</option>
+            </select>
+
+            <textarea id="codeEditor" placeholder="Write your code here..."></textarea>
+
+            <button id="runButton">▶ Run Code</button>
+        </section>
+
+        <!--  Output Section -->
+        <section class="output-container">
+            <h2>💡 Output</h2>
+            <pre id="output">Output will appear here...</pre>
+            <input type="text" id="input-box" placeholder="Enter input..." style="display: none;" />
+        </section>
+    </main>
+
+    <!-- Optional Footer -->
+    <footer class="footer">
+        <p>Frontend: <a href="https://code-shaala.onrender.com" target="_blank">code-shaala.onrender.com</a> |
+        Backend: <a href="https://code-shaala-backend-3.onrender.com" target="_blank">code-shaala-backend-3.onrender.com</a></p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="main.js" defer></script>
+</body>
+</html>
