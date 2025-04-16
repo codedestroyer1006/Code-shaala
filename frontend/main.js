@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const inputBox = document.getElementById("input-box");
 
     // 🔗 Backend hosted on Render
-    const BACKEND_URL = "https://code-shaala-backend-3.onrender.com";
+    const BACKEND_URL = "https://code-shaala-backend-1.onrender.com";
 
     console.log("🌐 Frontend running at:", window.location.origin);
     console.log("🔗 Connected to backend at:", BACKEND_URL);
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             inputBox.style.display = "none";
             inputQueue = [];
 
-            const response = await fetch(${BACKEND_URL}/execute, {
+            const response = await fetch(`${BACKEND_URL}/execute`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ language, code }),
@@ -63,11 +63,11 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!userInput) return;
 
             inputQueue.push(userInput);
-            outputBox.innerText += \n> ${userInput}\n;
+            outputBox.innerText += `\n> ${userInput}\n`;
             inputBox.value = "";
 
             try {
-                const response = await fetch(${BACKEND_URL}/execute_input, {
+                const response = await fetch(`${BACKEND_URL}/execute_input`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ input: userInput }),
