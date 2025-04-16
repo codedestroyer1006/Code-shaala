@@ -5,21 +5,19 @@ document.addEventListener("DOMContentLoaded", function () {
     const outputBox = document.getElementById("output");
     const inputBox = document.getElementById("input-box");
 
-    // 🔗 Backend hosted on Render
-    const BACKEND_URL = "https://code-shaala-backend-3.onrender.com";
+    // 🔗 Updated Backend URL
+    const BACKEND_URL = "https://code-shaala-backend-4.onrender.com";
 
     console.log("🌐 Frontend running at:", window.location.origin);
     console.log("🔗 Connected to backend at:", BACKEND_URL);
 
     let inputQueue = [];
 
-    // Check if all necessary elements exist
     if (!runButton || !languageSelector || !codeEditor || !outputBox || !inputBox) {
         console.error("❌ One or more elements are missing in your HTML.");
         return;
     }
 
-    // Run Button Handler
     runButton.addEventListener("click", async function () {
         const language = languageSelector.value;
         const code = codeEditor.value;
@@ -56,7 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Input Box Handler (for user input after code execution)
     inputBox.addEventListener("keypress", async function (e) {
         if (e.key === "Enter") {
             const userInput = inputBox.value.trim();
