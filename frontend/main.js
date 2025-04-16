@@ -5,19 +5,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const outputBox = document.getElementById("output");
     const inputBox = document.getElementById("input-box");
 
-    // 🔗 Updated Backend URL
-    const BACKEND_URL = "https://code-shaala-backend-4.onrender.com";
+    // 🔗 Backend hosted on Render
+    const BACKEND_URL = "https://code-shaala-backend-3.onrender.com";
 
     console.log("🌐 Frontend running at:", window.location.origin);
     console.log("🔗 Connected to backend at:", BACKEND_URL);
 
     let inputQueue = [];
 
+    // Check if all necessary elements exist
     if (!runButton || !languageSelector || !codeEditor || !outputBox || !inputBox) {
         console.error("❌ One or more elements are missing in your HTML.");
         return;
     }
 
+    // Run Button Handler
     runButton.addEventListener("click", async function () {
         const language = languageSelector.value;
         const code = codeEditor.value;
@@ -32,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             inputBox.style.display = "none";
             inputQueue = [];
 
-            const response = await fetch(`${BACKEND_URL}/execute`, {
+            const response = await fetch(${BACKEND_URL}/execute, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ language, code }),
@@ -54,17 +56,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    // Input Box Handler (for user input after code execution)
     inputBox.addEventListener("keypress", async function (e) {
         if (e.key === "Enter") {
             const userInput = inputBox.value.trim();
             if (!userInput) return;
 
             inputQueue.push(userInput);
-            outputBox.innerText += `\n> ${userInput}\n`;
+            outputBox.innerText += \n> ${userInput}\n;
             inputBox.value = "";
 
             try {
-                const response = await fetch(`${BACKEND_URL}/execute_input`, {
+                const response = await fetch(${BACKEND_URL}/execute_input, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ input: userInput }),
