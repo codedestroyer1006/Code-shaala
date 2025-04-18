@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const inputBox = document.getElementById("input-box");
 
     // 🔗 Backend URL hosted on Render
-    const BACKEND_URL = "https://code-shaala-backend-1.onrender.com";
+    const BACKEND_URL = "https://code-shaala-backend.onrender.com";
 
     console.log("🌐 Frontend running at:", window.location.origin);
     console.log("🔗 Connected to backend at:", BACKEND_URL);
