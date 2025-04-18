@@ -1,11 +1,11 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const runButton = document.getElementById("runButton");
     const languageSelector = document.getElementById("language");
     const codeEditor = document.getElementById("codeEditor");
     const outputBox = document.getElementById("output");
     const inputBox = document.getElementById("input-box");
 
-    // 🔗 Backend hosted on Render
+    // 🔗 Backend URL hosted on Render
     const BACKEND_URL = "https://code-shaala-backend-1.onrender.com";
 
     console.log("🌐 Frontend running at:", window.location.origin);
@@ -13,14 +13,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let inputQueue = [];
 
-    // Check if all necessary elements exist
+    // Validate all required elements exist
     if (!runButton || !languageSelector || !codeEditor || !outputBox || !inputBox) {
-        console.error("❌ One or more elements are missing in your HTML.");
+        console.error("❌ One or more required elements are missing in the HTML.");
         return;
     }
 
-    // Run Button Handler
-    runButton.addEventListener("click", async function () {
+    // 🔘 Run Code Button Click Handler
+    runButton.addEventListener("click", async () => {
         const language = languageSelector.value;
         const code = codeEditor.value;
 
@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        try {
-            outputBox.innerText = "⏳ Running code...";
-            inputBox.style.display = "none";
-            inputQueue = [];
+        outputBox.innerText = "⏳ Running code...";
+        inputBox.style.display = "none";
+        inputQueue = [];
 
+        try {
             const response = await fetch(`${BACKEND_URL}/execute`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const result = await response.json();
-            console.log("✅ Response from backend:", result);
+            console.log("✅ Backend response:", result);
 
             if (result.requires_input) {
                 outputBox.innerText = result.output || "⏳ Waiting for input...";
@@ -52,40 +52,40 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } catch (error) {
             outputBox.innerText = "❌ Unable to connect to the backend.";
-            console.error(error);
+            console.error("❌ Fetch error:", error);
         }
     });
 
-    // Input Box Handler (for user input after code execution)
-    inputBox.addEventListener("keypress", async function (e) {
-        if (e.key === "Enter") {
-            const userInput = inputBox.value.trim();
-            if (!userInput) return;
+    // ⌨️ Handle user input when backend requires it
+    inputBox.addEventListener("keypress", async (e) => {
+        if (e.key !== "Enter") return;
 
-            inputQueue.push(userInput);
-            outputBox.innerText += `\n> ${userInput}\n`;
-            inputBox.value = "";
+        const userInput = inputBox.value.trim();
+        if (!userInput) return;
 
-            try {
-                const response = await fetch(`${BACKEND_URL}/execute_input`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ input: userInput }),
-                });
+        inputQueue.push(userInput);
+        outputBox.innerText += `\n> ${userInput}\n`;
+        inputBox.value = "";
 
-                const result = await response.json();
+        try {
+            const response = await fetch(`${BACKEND_URL}/execute_input`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ input: userInput }),
+            });
 
-                if (result.requires_input) {
-                    outputBox.innerText += result.output || "";
-                    inputBox.focus();
-                } else {
-                    outputBox.innerText += result.output || result.error || "";
-                    inputBox.style.display = "none";
-                }
-            } catch (error) {
-                outputBox.innerText += "\n❌ Error sending input to backend.";
-                console.error(error);
+            const result = await response.json();
+
+            if (result.requires_input) {
+                outputBox.innerText += result.output || "";
+                inputBox.focus();
+            } else {
+                outputBox.innerText += result.output || result.error || "";
+                inputBox.style.display = "none";
             }
+        } catch (error) {
+            outputBox.innerText += "\n❌ Error sending input to backend.";
+            console.error("❌ Input error:", error);
         }
     });
 });
